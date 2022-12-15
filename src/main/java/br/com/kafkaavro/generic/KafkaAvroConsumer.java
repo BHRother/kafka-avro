@@ -37,7 +37,6 @@ public class KafkaAvroConsumer implements AutoCloseable {
     props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
     props.put(GROUP_ID_CONFIG, "example");
     props.put(KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-//    props.put(VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
 
     // for Avro
     props.put(VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class.getName());
