@@ -1,0 +1,40 @@
+version: '3'
+services:
+  zookeeper-avro:
+    image: confluentinc/cp-zookeeper:7.3.0
+    hostname: zookeeper-avro
+    container_name: zookeeper-avro
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka-avro:
+    image: confluentinc/cp-kafka:7.3.0
+    hostname: kafka-avro
+    container_name: kafka-avro
+    depends_on:
+      - zookeeper-avro
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-avro:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-avro:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+
+  schema-avro:
+    image: confluentinc/cp-schema-registry:7.3.0
+    hostname: schema-avro
+    container_name: schema-avro
+    depends_on:
+      - zookeeper-avro
+      - kafka-avro
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-avro:9092
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper-avro:2181
+      SCHEMA_REGISTRY_HOST_NAME: schema-avro
+      SCHEMA_REGISTRY_LISTENERS: http://schema-avro:8081
+    ports:
+      - "8081:8081"

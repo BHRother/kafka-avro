@@ -1,0 +1,24 @@
+{
+  "namespace": "br.com.kafkaavro",
+  "type": "record",
+  "name": "SpecificItem",
+  "fields": [
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "name of the item"
+    },
+    {
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "name": "sku",
+      "type": "long"
+    },
+    {
+      "name": "price",
+      "type": "double"
+    }
+  ]
+}
